@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+}
+
+@layer components {
+  .menu-item {
+    @apply relative flex h-full cursor-pointer items-center p-3 font-bold transition-colors ease-in-out hover:bg-white/10 hover:text-zinc-200 text-sm;
+  }
+}
