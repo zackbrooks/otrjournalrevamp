@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Journal from "./pages/Journal";
 import Login from "./pages/Login";
 import Signup from "./pages/Register";
+import Broker from "./pages/Broker";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/journal" element={<Journal />} />
+      <Route path="/broker" element={<Broker />} />
     </Routes>
   );
 }

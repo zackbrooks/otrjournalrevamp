@@ -1,4 +1,4 @@
-import journalApi from "../../api/journalApi";
+import { journalApi } from "../../api/journalApi";
 import { useAuthStore } from "../../store/userStore";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -10,8 +10,6 @@ import * as Yup from "yup";
 type Props = {};
 
 const RegisterForm = (props: Props) => {
-  const setToken = useAuthStore((state) => state.setToken);
-  const setUser = useAuthStore((state) => state.setUser);
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
   let navigate = useNavigate();
@@ -30,7 +28,7 @@ const RegisterForm = (props: Props) => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await journalApi.post("/api/users/signup", {
+        const response = await journalApi.post("/api/user/signup", {
           email: values.email,
           password: values.password,
         });

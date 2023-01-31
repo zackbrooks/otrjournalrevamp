@@ -13,15 +13,17 @@ exports.getABroker = async (req, res) => {
 
 // @GET, get all brokers created by a user
 exports.getBrokers = async (req, res) => {
+  console.log("got here boy");
   try {
-    const allBrokers = await Broker.find({ userId: req.body.userId });
-
-    res.send({
-      allBrokers,
+    // if (!req.body.userId) throw Error("Access Denied");
+    const allBrokers = await Broker.find({
+      userId: "63d48272c8ad1d722139ed3d",
     });
+
+    res.send(allBrokers);
   } catch (err) {
-    console.log("whathathh");
-    res.status(400).send({ error: err.errors[field].message });
+    console.log("whathathh", err.message);
+    res.status(400).send({ error: err.message });
   }
 };
 
@@ -29,6 +31,7 @@ exports.getBrokers = async (req, res) => {
 exports.createBroker = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+  req.body.userId = "63d48272c8ad1d722139ed3d";
   try {
     await Broker.create(
       _.pick(req.body, [
@@ -65,7 +68,7 @@ exports.updateBroker = async (req, res) => {
         $set: {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
-          userId: req.body.id,
+          userId: "63d48272c8ad1d722139ed3d",
           rating: req.body.rating,
           email: req.body.email,
           phoneNumber: req.body.phoneNumber,

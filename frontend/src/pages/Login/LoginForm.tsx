@@ -1,5 +1,6 @@
 import { useAuthStore } from "../../store/userStore";
-import journalApi from "../../api/journalApi";
+
+import { journalApi } from "../../api/journalApi";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,7 +28,7 @@ const LoginForm = (props: Props) => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await journalApi.post("/api/users/login", {
+        const response = await journalApi.post("/api/user/login", {
           email: values.email,
           password: values.password,
         });

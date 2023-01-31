@@ -17,3 +17,12 @@ export const useAuthStore = create<authState>((set) => ({
   setToken: (value) => set({ token: value }),
   setUserId: (str) => set({ userId: str }),
 }));
+
+export const authStore = create<authState>((set) => ({
+  user: false,
+  token: null,
+  userId: "",
+  setUser: (bool) => set({ user: bool }),
+  setToken: (value) => set({ token: value }),
+  setUserId: (str) => set({ userId: str }),
+}));

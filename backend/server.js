@@ -42,7 +42,7 @@ app.use(
 
 app.use(flash());
 
-app.use("/api/users", mainRoutes);
+app.use("/api/user", mainRoutes);
 app.use("/api/broker", brokerRoutes);
 app.use("/api/company", compRoutes);
 app.use("/api/load", loadRoutes);
