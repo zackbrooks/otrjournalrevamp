@@ -12,6 +12,7 @@ const mainRoutes = require("./routes/main");
 const error = require("./middleware/error");
 const compRoutes = require("./routes/company");
 const brokerRoutes = require("./routes/broker");
+const loadRoutes = require("./routes/load");
 
 const PORT = process.env.PORT || 5000;
 
@@ -44,6 +45,7 @@ app.use(flash());
 app.use("/api/users", mainRoutes);
 app.use("/api/broker", brokerRoutes);
 app.use("/api/company", compRoutes);
+app.use("/api/load", loadRoutes);
 
 //server frontend
 // if (process.env.NODE_ENV === "production") {

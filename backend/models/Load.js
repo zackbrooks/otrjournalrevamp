@@ -87,10 +87,25 @@ const LoadSchema = new mongoose.Schema({
 function validateLoad(load) {
   const schema = {
     bol: Joi.string().required(),
+    name: Joi.string(),
     payment: Joi.number(),
     notes: Joi.string(),
     completed: Joi.boolean(),
     userId: Joi.string().required(),
+    originName: Joi.string().required(),
+    originAddress: Joi.string().required(),
+    originTrailer: Joi.string().required(),
+    originPUStart: Joi.string().required(),
+    originPUEnd: Joi.string().required(),
+    originMiles: Joi.number().required(),
+    originType: Joi.string().required(),
+    destinationName: Joi.string().required(),
+    destinationAddress: Joi.string().required(),
+    destinationTrailer: Joi.string().required(),
+    destinationPUStart: Joi.string().required(),
+    destinationPUEnd: Joi.string().required(),
+    destinationMiles: Joi.number().required(),
+    destinationType: Joi.string().required(),
   };
   return (result = Joi.validate(load, schema));
 }
