@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { getAllBrokers } from "../../api/journalApi";
+
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { addBroker, updateBroker, deleteBroker } from "../../api/journalApi";
+import {
+  updateBroker,
+  deleteData,
+  getAllData,
+  addNewData,
+} from "../../api/journalApi";
 import { BsTrashFill } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
-import e from "express";
+import { ToastContainer } from "react-toastify";
 
 type Props = {};
 
@@ -14,8 +19,9 @@ const Broker = (props: Props) => {
     lastName: "",
     phoneNumber: "",
     email: "",
-    rating: "",
+    rating: 1,
     notes: "",
+    userId: "63d48272c8ad1d722139ed3d",
   });
   const queryClient = useQueryClient();
 
@@ -24,9 +30,9 @@ const Broker = (props: Props) => {
     isError,
     error,
     data: brokerInfo,
-  } = useQuery("brokers", getAllBrokers);
+  } = useQuery("brokers", () => getAllData("broker"));
 
-  const addBrokerMutation = useMutation(addBroker, {
+  const addBrokerMutation = useMutation(addNewData, {
     onSuccess: () => {
       //Invalidates cache and refetch
       queryClient.invalidateQueries("brokers");
@@ -38,7 +44,7 @@ const Broker = (props: Props) => {
       queryClient.invalidateQueries("brokers");
     },
   });
-  const deleteBrokerMutation = useMutation(deleteBroker, {
+  const deleteBrokerMutation = useMutation(deleteData, {
     onSuccess: () => {
       //Invalidates cache and refetch
       queryClient.invalidateQueries("brokers");
@@ -47,16 +53,16 @@ const Broker = (props: Props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    addBrokerMutation.mutate({ broker });
+    addBrokerMutation.mutate({ dataType: "broker", dataInfo: broker });
     setBroker({
       firstName: "",
       lastName: "",
       phoneNumber: "",
       email: "",
-      rating: "",
+      rating: 1,
       notes: "",
+      userId: "63d48272c8ad1d722139ed3d",
     });
-    console.log("submit broker", broker);
   };
   const handleChange = (prop: any) => (event: any) => {
     setBroker({ ...broker, [prop]: event.target.value });
@@ -64,7 +70,21 @@ const Broker = (props: Props) => {
 
   const newBroker = (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        limit={6}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <form onSubmit={handleSubmit}>
+        <svg className="animate-bounce w-6 h-6 bg-teal-300">dafsd</svg>
         <div className="flex m-1">
           <label htmlFor="firstName">Enter Broker First Name</label>
           <input
@@ -77,7 +97,7 @@ const Broker = (props: Props) => {
           />
         </div>
         <div className="flex m-1">
-          <label htmlFor="lastName">Enter Broker First Name</label>
+          <label htmlFor="lastName">Enter Broker Last Name</label>
           <input
             type="text"
             id="lastName"
@@ -152,22 +172,38 @@ const Broker = (props: Props) => {
     <main>
       <h1 className="text-3xl">Broker List</h1>
       {newBroker}
+      {/* {content} */}
       <div className="flex gap-1 max-w-screen-lg mx-auto">
-        {content.map((broker: any) => {
-          return (
-            <div className="w-fit border-2 border-black p-2" key={broker._id}>
-              <p>Name: {broker.firstName + " " + broker.lastName}</p>
-              <p>Phone Number: {broker.phoneNumber}</p>
-              <p>Email: {broker.email}</p>
-              <p>Rating: {broker.rating}</p>
-              <p>Notes: {broker.notes}</p>
-              <div className="flex justify-between mt-2">
-                <BsTrashFill />
-                <AiFillEdit />
+        {isLoading ? (
+          <p>Data is loading</p>
+        ) : Array.isArray(content) && content.length > 0 ? (
+          content.map((broker: any) => {
+            return (
+              <div className="w-fit border-2 border-black p-2" key={broker._id}>
+                <p>Name: {broker.firstName + " " + broker.lastName}</p>
+                <p>Phone Number: {broker.phoneNumber}</p>
+                <p>Email: {broker.email}</p>
+                <p>Rating: {broker.rating}</p>
+                <p>Notes: {broker.notes}</p>
+                <div className="flex justify-between mt-2">
+                  <button
+                    onClick={() =>
+                      deleteBrokerMutation.mutate({
+                        dataType: "broker",
+                        dataId: broker._id,
+                      })
+                    }
+                  >
+                    <BsTrashFill />
+                  </button>
+                  <AiFillEdit />
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <p>You havent entered any broker data</p>
+        )}
       </div>
     </main>
   );

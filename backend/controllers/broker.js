@@ -1,5 +1,6 @@
 const { Broker, validate } = require("../models/Broker");
 const _ = require("lodash");
+const { errorFormatter, formatErrors } = require("../utils/index");
 
 // @GET, get a specific broker created by a user
 exports.getABroker = async (req, res) => {
@@ -13,7 +14,6 @@ exports.getABroker = async (req, res) => {
 
 // @GET, get all brokers created by a user
 exports.getBrokers = async (req, res) => {
-  console.log("got here boy");
   try {
     // if (!req.body.userId) throw Error("Access Denied");
     const allBrokers = await Broker.find({
@@ -22,7 +22,6 @@ exports.getBrokers = async (req, res) => {
 
     res.send(allBrokers);
   } catch (err) {
-    console.log("whathathh", err.message);
     res.status(400).send({ error: err.message });
   }
 };
@@ -30,8 +29,13 @@ exports.getBrokers = async (req, res) => {
 // @POST, create a broker
 exports.createBroker = async (req, res) => {
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-  req.body.userId = "63d48272c8ad1d722139ed3d";
+  if (error)
+    return res
+      .status(400)
+      .send({ error: formatErrors(error.details, "mongo") });
+
+  // req.body.userId = "63d48272c8ad1d722139ed3d";
+
   try {
     await Broker.create(
       _.pick(req.body, [
@@ -46,11 +50,8 @@ exports.createBroker = async (req, res) => {
     );
     res.send("Broker created");
   } catch (err) {
-    let errArr = [];
-    for (field in err.errors) {
-      errArr.push(err.errors[field].message);
-    }
-    res.status(400).send({ error: errArr });
+    formatErrors(err.errors, "mongo");
+    res.status(400).send({ error: formatErrors(err.errors, "mongo") });
   }
 };
 
@@ -78,11 +79,7 @@ exports.updateBroker = async (req, res) => {
     );
     res.json({ message: "broker updated" });
   } catch (err) {
-    let errArr = [];
-    for (field in err.errors) {
-      errArr.push(err.errors[field].message);
-    }
-    res.status(400).send({ error: errArr });
+    formatErrors(err);
   }
 };
 
@@ -91,7 +88,7 @@ exports.updateBroker = async (req, res) => {
 // @deletes user
 exports.deleteBroker = async (req, res) => {
   try {
-    await Broker.findOneAndDelete({ _id: req.body.brokerId });
+    await Broker.findOneAndDelete({ _id: req.params.id });
     res.status(201).json({ message: "Deleted Broker" });
   } catch (error) {
     res.status(400).send("Deletion failed");

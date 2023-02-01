@@ -11,5 +11,5 @@ router.get("/viewone/:id", brokerController.getABroker);
 // //Posts the updated data for a specific Broker to the DB
 router.post("/edit/:id", brokerController.updateBroker);
 // //Deletes a specific Broker from the DB
-router.delete("/delete", brokerController.deleteBroker);
+router.delete("/delete/:id", brokerController.deleteBroker);
 module.exports = router;

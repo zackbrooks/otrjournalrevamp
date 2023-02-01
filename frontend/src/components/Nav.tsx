@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuthStore } from "../store/userStore";
 import { FaSignInAlt } from "react-icons/fa";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
@@ -6,6 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 type Props = {};
 
 function Nav({}: Props) {
+  const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -13,6 +15,10 @@ function Nav({}: Props) {
     setMenuOpen((preVal) => !preVal);
     console.log(menuOpen);
   };
+
+  if (user) {
+    return <p>Booming</p>;
+  }
   return (
     <nav className=" px-1 bg-gradient-to-r from-gray-700 to-gray-300 flex justify-between fixed w-full items-center">
       <div className="flex gap-1 items-center justify-center md:p-3 p-1">

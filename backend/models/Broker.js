@@ -43,10 +43,11 @@ function validateBroker(broker) {
     email: Joi.string().email().required(),
     phoneNumber: Joi.string().required(),
     userId: Joi.string().required(),
-    rating: Joi.string().max(10).min(1),
+    rating: Joi.number().max(10).min(1),
     notes: Joi.string(),
   };
-  return (result = Joi.validate(broker, schema));
+  console.log((result = Joi.validate(broker, schema)));
+  return (result = Joi.validate(broker, schema, { abortEarly: false }));
 }
 
 module.exports.Broker = mongoose.model("Broker", BrokerSchema);
