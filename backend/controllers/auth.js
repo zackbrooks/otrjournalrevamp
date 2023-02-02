@@ -3,6 +3,15 @@ const _ = require("lodash");
 const Joi = require("joi");
 const { JSONCookie } = require("cookie-parser");
 
+exports.currentUser = async (req, res) => {
+  console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", req.user.userId);
+  const user = await User.findById(req.user.userId)
+    .select("-password")
+    .select("-email")
+    .select("-__v");
+  res.send(user);
+};
+
 exports.postLogin = async (req, res) => {
   const { email, password } = req.body;
   const { error } = validate(req.body);
@@ -19,7 +28,8 @@ exports.postLogin = async (req, res) => {
   }
 
   const token = user.createJWT();
-  res.send({ id: user._id, token });
+
+  res.header("x-auth-token", token).send({ id: user._id, token });
 };
 
 exports.postSignup = async (req, res, next) => {

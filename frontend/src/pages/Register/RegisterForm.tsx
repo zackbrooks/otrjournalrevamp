@@ -136,10 +136,10 @@ const RegisterForm = (props: Props) => {
             </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-zinc-500 hover:bg-zinc-900 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-zinc-500 hover:bg-zinc-900 hover:text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline text-[0.75rem] w-auto"
                 type="submit"
               >
-                Register
+                Create Account
               </button>
               <a
                 className="inline-block align-baseline font-bold text-sm hover:text-zinc-300 "

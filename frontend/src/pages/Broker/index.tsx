@@ -1,5 +1,6 @@
 import React from "react";
 import Broker from "./Broker";
+import Layout from "../../components/HOC/Layout";
 
 type Props = {};
 

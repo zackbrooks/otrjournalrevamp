@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const brokerController = require("../controllers/broker");
+const auth = require("../middleware/auth");
 
 //Creates Broker in DB
 router.post("/create", brokerController.createBroker);

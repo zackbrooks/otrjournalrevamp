@@ -1,5 +1,5 @@
 import { useAuthStore } from "../../store/userStore";
-
+import { addUserLocalStorage } from "../../store/userStore";
 import { journalApi } from "../../api/journalApi";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
@@ -28,11 +28,12 @@ const LoginForm = (props: Props) => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await journalApi.post("/api/user/login", {
-          email: values.email,
-          password: values.password,
-        });
+        console.log(values);
+        const response = await journalApi.post("/api/user/login", values);
         let token = response.data.token;
+        let user = response.data.id;
+
+        addUserLocalStorage(user, token);
         setToken(token);
         toast.success(
           "Login successful! You will now be taken to your journal page."
@@ -83,7 +84,7 @@ const LoginForm = (props: Props) => {
                 className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
                 id="email"
                 type="email"
-                placeholder="Email"
+                placeholder="example@email.com"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -103,7 +104,7 @@ const LoginForm = (props: Props) => {
                 className="shadow appearance-none  rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
-                placeholder="******************"
+                placeholder="**************"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -117,7 +118,7 @@ const LoginForm = (props: Props) => {
                 className="bg-zinc-500 hover:bg-zinc-900 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Sign In
+                Login
               </button>
               <a
                 className="inline-block align-baseline font-bold text-sm hover:text-zinc-300 "
