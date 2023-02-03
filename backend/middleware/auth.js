@@ -1,8 +1,13 @@
 const jwt = require("jsonwebtoken");
+const { rest } = require("lodash");
 
 function auth(req, res, next) {
-  // const token = req.headers.authorization;
-  const token = req.header("x-auth-token");
+  const authheader = req.headers.authorization;
+  if (!authheader) {
+    return res.status(403).send("header does not exist");
+  }
+  const token = authheader.split(" ")[1];
+  // const token = req.header("x-auth-token");
   if (!token)
     return res.status(401).send("Access denied. No token provided mane");
 

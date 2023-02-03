@@ -28,18 +28,17 @@ const LoginForm = (props: Props) => {
     }),
     onSubmit: async (values) => {
       try {
-        console.log(values);
         const response = await journalApi.post("/api/user/login", values);
-        let token = response.data.token;
+        let token = await response.data.token;
         let user = response.data.id;
+        console.log("TTTTTTTOKEN", token);
 
-        addUserLocalStorage(user, token);
         setToken(token);
         toast.success(
           "Login successful! You will now be taken to your journal page."
         );
         setTimeout(() => {
-          navigate("/journal");
+          navigate("/broker");
         }, 3000);
       } catch (error: any) {
         toast.error(error.response.data);

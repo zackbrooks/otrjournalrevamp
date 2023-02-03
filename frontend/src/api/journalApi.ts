@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useAuthStore } from "../store/userStore";
-import { authStore } from "../store/userStore";
 import { toast } from "react-toastify";
 
-// const accessToken = useAuthStore((state) => state.token);
 export const journalApi = axios.create({
   baseURL: "http://localhost:5000",
   withCredentials: true,
@@ -12,31 +10,19 @@ export const journalApi = axios.create({
   // },
 });
 
-export const request = ({ ...options }) => {
-  journalApi.defaults.headers.common.Authorization = "Bearer token";
-  const accessToken = authStore((state) => state.token);
-  const onSuccess = (response: any) => response;
-  const onError = (error: any) => {
-    console.log("THERE WAS AN ERROR");
-    return error;
-  };
-  return journalApi(options).then(onSuccess).catch(onError);
-};
 export const journalApiAuth = axios.create({
   baseURL: "http://localhost:5000",
   withCredentials: true,
   // headers: {
-  //   Authorization: "Bearer " + authStore((state) => state.token),
+  //   Authorization: "Bearer " + authStore.getState().token,
   // },
 });
 
-// journalApiAuth.interceptors.request.use((config: any) => {
-//   console.log("it got here");
-//   const token = useAuthStore((state) => state.token);
-//   console.log("TTTTT", token);
-//   config.headers = { Authorization: `Bearer ${token}` };
-//   return config;
-// });
+journalApiAuth.interceptors.request.use((config: any) => {
+  const token = useAuthStore.getState().token;
+  config.headers = { Authorization: `Bearer ${token}` };
+  return config;
+});
 export const logUser = async (userInfo: object) => {
   try {
     const response = await journalApi.post("/api/users/login", userInfo);
@@ -64,10 +50,12 @@ export const getAllData = async (dataType: string) => {
     //   url: `/api/${dataType}/all${dataType}s`,
     //   method: "get",
     // });
-    const response = await journalApi.get(`/api/${dataType}/all${dataType}s`);
+    const response = await journalApiAuth.get(
+      `/api/${dataType}/all${dataType}s`
+    );
     return response.data;
   } catch (error: any) {
-    console.log(error.message);
+    toast.error(error.response.data);
   }
 };
 
@@ -75,7 +63,10 @@ export const addNewData = async (obj: any) => {
   const { dataType, dataInfo } = obj;
   console.log(dataType, dataInfo);
   try {
-    const response = await journalApi.post(`/api/${dataType}/create`, dataInfo);
+    const response = await journalApiAuth.post(
+      `/api/${dataType}/create`,
+      dataInfo
+    );
     toast.success(`${dataType} successfully added`);
   } catch (error: any) {
     console.log("error mayne", error.response.data);

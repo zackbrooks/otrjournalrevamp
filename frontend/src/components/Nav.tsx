@@ -33,6 +33,9 @@ function Nav({}: Props) {
         <a href="#why">
           <li className="menu-item">Why Choose Trucker's Pad?</li>
         </a>
+        <Link to={"/broker"}>
+          <li className="menu-item">Brokers</li>
+        </Link>
         <Link to={"/login"}>
           <li className="menu-item">
             <FaSignInAlt />
@@ -83,7 +86,7 @@ function Nav({}: Props) {
           {!menuOpen && <AiOutlineMenu size={20} />}
         </div>
       </div>
-      {loggedIn}
+      {loggedOut}
     </nav>
   );
 }
