@@ -111,7 +111,7 @@ exports.updateLoad = async (req, res) => {
 
 exports.deleteLoad = async (req, res) => {
   try {
-    await Load.findOneAndDelete({ _id: req.body.loadId });
+    await Load.findOneAndDelete({ _id: req.params.id });
     res.status(201).json({ message: "Deleted Load" });
   } catch (error) {
     res.status(400).send("Deletion failed");

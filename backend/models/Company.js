@@ -41,7 +41,7 @@ const CompanySchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    required: false,
+    required: true,
     enum: [
       "Parking",
       "Repair/Service",
@@ -53,6 +53,8 @@ const CompanySchema = new mongoose.Schema({
       "Pet Park",
       "Other",
       "Avoid",
+      "Shipper",
+      "Receiver",
     ],
   },
 });
@@ -60,10 +62,10 @@ const CompanySchema = new mongoose.Schema({
 function validateCompany(company) {
   const schema = {
     name: Joi.string().required(),
-    email: Joi.string().email().required(),
+    email: Joi.string().email(),
     phoneNumber: Joi.string(),
     userId: Joi.string().required(),
-    rating: Joi.string().max(10).min(1),
+    rating: Joi.number().max(10).min(1),
     notes: Joi.string(),
     routing: Joi.string(),
     location: Joi.string().required(),

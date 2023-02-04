@@ -5,12 +5,12 @@ const compController = require("../controllers/company");
 //Creates Company in DB
 router.post("/create", compController.createCompany);
 
-router.get("/allcompanies", compController.getCompanies);
+router.get("/allcompanys", compController.getCompanies);
 
 router.get("/view/:id", compController.getACompany);
 
 router.post("/edit/:id", compController.updateCompany);
 
-router.delete("/delete", compController.deleteCompany);
+router.delete("/delete/:id", compController.deleteCompany);
 
 module.exports = router;

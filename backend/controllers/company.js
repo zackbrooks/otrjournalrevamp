@@ -32,11 +32,10 @@ exports.createCompany = async (req, res) => {
 // @GET, get all brokers created by a user
 exports.getCompanies = async (req, res) => {
   try {
-    const companies = await Company.find({ userId: req.body.userId });
-
-    res.send({
-      companies,
+    const companies = await Company.find({
+      userId: "63d48272c8ad1d722139ed3d",
     });
+    res.send(companies);
   } catch (err) {
     res.status(400).send({ error: err.errors[field].message });
   }
@@ -87,7 +86,7 @@ exports.updateCompany = async (req, res) => {
 
 exports.deleteCompany = async (req, res) => {
   try {
-    await Company.findOneAndDelete({ _id: req.body.companyId });
+    await Company.findOneAndDelete({ _id: req.params.id });
     res.status(201).json({ message: "Deleted Company" });
   } catch (error) {
     res.status(400).send("Deletion failed");

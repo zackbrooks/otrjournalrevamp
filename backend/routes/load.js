@@ -11,6 +11,6 @@ router.get("/view/:id", loadController.getALoad);
 
 router.post("/edit/:id", loadController.updateLoad);
 
-router.delete("/delete", loadController.deleteLoad);
+router.delete("/delete/:id", loadController.deleteLoad);
 
 module.exports = router;

@@ -53,6 +53,7 @@ export const getAllData = async (dataType: string) => {
     const response = await journalApiAuth.get(
       `/api/${dataType}/all${dataType}s`
     );
+    console.log(response.data);
     return response.data;
   } catch (error: any) {
     toast.error(error.response.data);

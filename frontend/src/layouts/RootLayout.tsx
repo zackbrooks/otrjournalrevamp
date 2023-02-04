@@ -47,13 +47,13 @@ const RootLayout = (props: Props) => {
   let loggedIn = (
     <>
       <ul className="hidden md:flex">
-        <Link to={"/broker"}>
+        <Link to={"/map"}>
           <li className="menu-item">Map</li>
         </Link>
-        <Link to={"/broker"}>
+        <Link to={"/load"}>
           <li className="menu-item">Loads</li>
         </Link>
-        <Link to={"/broker"}>
+        <Link to={"/company"}>
           <li className="menu-item">Companies</li>
         </Link>
         <Link to={"/broker"}>
