@@ -89,7 +89,7 @@ const RootLayout = (props: Props) => {
       </nav>
       <main
         id="home"
-        className="h-[100%] bg-cover bg-fixed md:bg-center bg-[center_left_-10rem] p-12 md:p-16"
+        className="h-[100vh] bg-cover bg-fixed md:bg-center bg-[center_left_-10rem] p-12 md:p-16"
         style={{ backgroundImage: `url(../../imgs/hero.jpg)` }}
       >
         <ToastContainer

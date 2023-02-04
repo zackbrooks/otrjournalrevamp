@@ -97,14 +97,14 @@ function validateLoad(load) {
     originTrailer: Joi.string().required(),
     originPUStart: Joi.string().required(),
     originPUEnd: Joi.string().required(),
-    originMiles: Joi.number().required(),
+    originMiles: Joi.number(),
     originType: Joi.string().required(),
     destinationName: Joi.string().required(),
     destinationAddress: Joi.string().required(),
     destinationTrailer: Joi.string().required(),
     destinationPUStart: Joi.string().required(),
     destinationPUEnd: Joi.string().required(),
-    destinationMiles: Joi.number().required(),
+    destinationMiles: Joi.number(),
     destinationType: Joi.string().required(),
   };
   return (result = Joi.validate(load, schema));

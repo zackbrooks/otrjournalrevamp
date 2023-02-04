@@ -46,10 +46,6 @@ export const registerUser = async (userInfo: object) => {
 
 export const getAllData = async (dataType: string) => {
   try {
-    // const response = await request({
-    //   url: `/api/${dataType}/all${dataType}s`,
-    //   method: "get",
-    // });
     const response = await journalApiAuth.get(
       `/api/${dataType}/all${dataType}s`
     );
