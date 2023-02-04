@@ -59,6 +59,7 @@ exports.createBroker = async (req, res) => {
 // @/edit/id
 // @posts updated info to the db
 exports.updateBroker = async (req, res) => {
+  console.log("ZZZZZZZZZZZZZ", req.body);
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   try {

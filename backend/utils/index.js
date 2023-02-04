@@ -1,8 +1,8 @@
 const formatErrors = (error, string) => {
   let errArr = [];
-
+  console.log(error);
   for (field in error) {
-    errArr.push(error[field].message);
+    errArr.push(error[field]?.message);
   }
 
   //   if (string === "mongo") {

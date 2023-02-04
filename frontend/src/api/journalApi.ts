@@ -84,6 +84,28 @@ export const updateBroker = async (broker: any) => {
   return await journalApi.post(`/api/broker/edit/${broker.id}`, broker);
 };
 
+export const editData = async (obj: any) => {
+  console.log("This would be a update call");
+  const { dataType, dataInfo, dataId } = obj;
+  console.log("EEEDDDIIITTT", dataType, dataInfo);
+  try {
+    const response = await journalApi.post(
+      `/api/${dataType}/edit/${dataId}`,
+      dataInfo
+    );
+    toast.success(`${dataType} successfully updated`);
+  } catch (error: any) {
+    console.log("error mayne on Edit", error.response.data);
+    if (error.response.data.error) {
+      for (error of error.response.data.error) {
+        toast.error(error);
+      }
+    } else {
+      toast.error(error.response.data);
+    }
+  }
+};
+
 export const deleteData = async (obj: any) => {
   const { dataType, dataId } = obj;
   return await journalApi.delete(`/api/${dataType}/delete/${dataId}`);

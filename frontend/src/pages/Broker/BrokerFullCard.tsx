@@ -1,22 +1,39 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 type Props = {
-  addBrokerMutation: any;
+  updateBrokerMutation: any;
+  broker: any;
+  editMode: boolean;
 };
 
-const BrokerFrom = (props: Props) => {
-  const { addBrokerMutation } = props;
+type Broker = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  rating: number;
+  notes: string;
+  userId: string;
+};
+
+const BrokerFullCard = (props: Props) => {
+  const { updateBrokerMutation, broker, editMode } = props;
+
+  const currentBroker: Broker = {
+    firstName: broker.firstName,
+    lastName: broker.lastName,
+    phoneNumber: broker.phoneNumber,
+    email: broker.email,
+    rating: 1,
+    notes: broker.notes,
+    userId: "63d48272c8ad1d722139ed3d",
+  };
 
   const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      email: "",
-      rating: 1,
-      notes: "",
-      userId: "63d48272c8ad1d722139ed3d",
-    },
+    enableReinitialize: true,
+    initialValues: currentBroker,
+
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
       firstName: Yup.string().required("Required"),
@@ -27,15 +44,18 @@ const BrokerFrom = (props: Props) => {
       userId: Yup.string(),
     }),
     onSubmit: async (values) => {
-      console.log(props.addBrokerMutation);
-      addBrokerMutation.mutate({ dataType: "broker", dataInfo: values });
+      updateBrokerMutation.mutate({
+        dataType: "broker",
+        dataInfo: values,
+        dataId: broker._id,
+      });
     },
   });
 
   return (
     <>
-      <div className="w-full md:w-80 mx-auto bg-zinc-200/95 rounded-[0.35rem] p-2 pb-4">
-        <h3 className="text-center">Add New Broker</h3>
+      <div className="w-full md:w-80 mx-auto">
+        {/* <h3 className="text-center">{editMode ? `Edit` Add New Broker}</h3> */}
         <form onSubmit={formik.handleSubmit}>
           <div className="flex m-1">
             <div className="flex flex-col w-full">
@@ -45,11 +65,12 @@ const BrokerFrom = (props: Props) => {
                   formik.touched.firstName && formik.errors.firstName
                     ? " border-red-500 border-2 bg-red-200 pb-1 "
                     : null
-                }`}
+                } `}
               >
                 First Name
               </label>
               <input
+                disabled={!editMode}
                 type="text"
                 id="firstName"
                 value={formik.values.firstName}
@@ -85,6 +106,7 @@ const BrokerFrom = (props: Props) => {
                 Last Name
               </label>
               <input
+                disabled={!editMode}
                 type="text"
                 id="lastName"
                 value={formik.values.lastName}
@@ -118,6 +140,7 @@ const BrokerFrom = (props: Props) => {
                 Email
               </label>
               <input
+                disabled={!editMode}
                 type="text"
                 id="email"
                 value={formik.values.email}
@@ -151,6 +174,7 @@ const BrokerFrom = (props: Props) => {
                 Phone Number
               </label>
               <input
+                disabled={!editMode}
                 type="text"
                 id="phoneNumber"
                 value={formik.values.phoneNumber}
@@ -184,6 +208,7 @@ const BrokerFrom = (props: Props) => {
                 Rating
               </label>
               <input
+                disabled={!editMode}
                 type="number"
                 id="rating"
                 value={formik.values.rating}
@@ -217,6 +242,7 @@ const BrokerFrom = (props: Props) => {
                 Notes
               </label>
               <textarea
+                disabled={!editMode}
                 id="notes"
                 value={formik.values.notes}
                 onChange={formik.handleChange}
@@ -229,7 +255,6 @@ const BrokerFrom = (props: Props) => {
                     : null
                 }`}
               />
-
               {formik.touched.notes && formik.errors.notes ? (
                 <p className="text-red-500 text-xs font-bold border-2 bg-red-200 w-fit px-1 rounded-[0.35rem] border-red-500 border-t-0 pt-1 rounded-tl-none rounded-tr-none">
                   {formik.errors.notes}
@@ -237,16 +262,18 @@ const BrokerFrom = (props: Props) => {
               ) : null}
             </div>
           </div>
-          <button
-            className="hover:bg-zinc-700 bg-zinc-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full mt-2"
-            type="submit"
-          >
-            Create Broker
-          </button>
+          {editMode && (
+            <button
+              className="hover:bg-zinc-700 bg-zinc-900 text-white font-bold py-2 md:px-1 rounded focus:outline-none focus:shadow-outline w-full mt-2"
+              type="submit"
+            >
+              Save Updated Info
+            </button>
+          )}
         </form>
       </div>
     </>
   );
 };
 
-export default BrokerFrom;
+export default BrokerFullCard;

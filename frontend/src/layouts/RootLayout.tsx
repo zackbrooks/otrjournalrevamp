@@ -4,11 +4,12 @@ import { FaSignInAlt } from "react-icons/fa";
 import { GrLogin } from "react-icons/gr";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { TbLogout } from "react-icons/tb";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 type Props = {};
 
-function Nav({}: Props) {
+const RootLayout = (props: Props) => {
   const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,9 +34,6 @@ function Nav({}: Props) {
         <a href="#why">
           <li className="menu-item">Why Choose Trucker's Pad?</li>
         </a>
-        <Link to={"/broker"}>
-          <li className="menu-item">Brokers</li>
-        </Link>
         <Link to={"/login"}>
           <li className="menu-item">
             <FaSignInAlt />
@@ -72,54 +70,45 @@ function Nav({}: Props) {
     </>
   );
   return (
-    <nav className=" px-1 bg-gradient-to-r from-gray-700 to-gray-300 flex justify-between fixed w-full items-center">
-      <div className="flex gap-1 items-center justify-center md:p-3 p-1">
-        <div>Logo</div>
-        <div>OTR Journal</div>
-      </div>
-      <div className="md:hidden ">
-        <div
-          className=" outline outline-zinc-600 mr-2"
-          onClick={mobileMenuState}
-        >
-          {menuOpen && <AiOutlineClose size={20} />}
-          {!menuOpen && <AiOutlineMenu size={20} />}
+    <>
+      <nav className=" px-1  flex justify-between fixed w-full items-center mb-2 bg-zinc-900 text-white">
+        <div className="flex gap-1 items-center justify-center md:p-3 p-1">
+          <div>Logo</div>
+          <div>OTR Journal</div>
         </div>
-      </div>
-      {loggedOut}
-    </nav>
+        <div className="md:hidden ">
+          <div
+            className=" outline outline-zinc-900 mr-2"
+            onClick={mobileMenuState}
+          >
+            {menuOpen && <AiOutlineClose size={20} />}
+            {!menuOpen && <AiOutlineMenu size={20} />}
+          </div>
+        </div>
+        {loggedIn}
+      </nav>
+      <main
+        id="home"
+        className="h-[100%] bg-cover bg-fixed md:bg-center bg-[center_left_-10rem] p-12 md:p-16"
+        style={{ backgroundImage: `url(../../imgs/hero.jpg)` }}
+      >
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          limit={6}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+        <Outlet />
+      </main>
+    </>
   );
-}
+};
 
-export default Nav;
-
-// {isLoading ? (
-//   <p>Data is loading</p>
-// ) : Array.isArray(content) && content.length > 0 ? (
-//   content.map((broker: any) => {
-//     return (
-//       <div className="w-fit border-2 border-black p-2" key={broker._id}>
-//         <p>Name: {broker.firstName + " " + broker.lastName}</p>
-//         <p>Phone Number: {broker.phoneNumber}</p>
-//         <p>Email: {broker.email}</p>
-//         <p>Rating: {broker.rating}</p>
-//         <p>Notes: {broker.notes}</p>
-//         <div className="flex justify-between mt-2">
-//           <button
-//             onClick={() =>
-//               deleteBrokerMutation.mutate({
-//                 dataType: "broker",
-//                 dataId: broker._id,
-//               })
-//             }
-//           >
-//             <BsTrashFill />
-//           </button>
-//           <AiFillEdit />
-//         </div>
-//       </div>
-//     );
-//   })
-// ) : (
-//   <p>You havent entered any broker data</p>
-// )}
+export default RootLayout;

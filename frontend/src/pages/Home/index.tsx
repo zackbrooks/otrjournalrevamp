@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../components/Nav";
+
 import Hero from "../../components/Hero";
 
 type Props = {};
@@ -7,7 +7,6 @@ type Props = {};
 const index = (props: Props) => {
   return (
     <>
-      <Nav />
       <Hero />
       <div
         id="what"
