@@ -3,6 +3,7 @@
 This is a WIP revamp of my previous project "Trucking Journal".
 
 **Link to previous project live(MVP):** https://truckingjournal.netlify.app/
+
 **Link to previous project repo:** https://github.com/zackbrooks/truckerJournalMERN
 
 ## Why Are You Making This Project....Again????
