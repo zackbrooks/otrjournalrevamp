@@ -1,5 +1,14 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
+
+export interface dateFilter {
+  startDate: string;
+  endDate: string;
+}
+
 type Props = {
   addLoadMutation: any;
 };
@@ -13,7 +22,10 @@ type Props = {
 // email
 // type
 const LoadForm = (props: Props) => {
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
   const { addLoadMutation } = props;
+  console.log(dateRange);
 
   const formik = useFormik({
     initialValues: {
@@ -68,6 +80,15 @@ const LoadForm = (props: Props) => {
 
   return (
     <>
+      <DatePicker
+        // selectsRange={true}
+        startDate={startDate}
+        endDate={endDate}
+        onChange={(update: any) => {
+          setDateRange(update);
+        }}
+        isClearable={true}
+      />
       <div className="w-full md:w-80 mx-auto bg-zinc-200/95 rounded-[0.35rem] p-2 pb-4">
         <h3 className="text-center">Add New Load</h3>
         <p className="text-center text-xs">
@@ -108,7 +129,7 @@ const LoadForm = (props: Props) => {
               ) : null}
             </div>
           </div>
-          ===
+
           <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label
@@ -143,7 +164,7 @@ const LoadForm = (props: Props) => {
               ) : null}
             </div>
           </div>
-          ===
+
           <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label
@@ -178,7 +199,7 @@ const LoadForm = (props: Props) => {
               ) : null}
             </div>
           </div>
-          === ===
+
           {/* <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label
@@ -213,7 +234,7 @@ const LoadForm = (props: Props) => {
               ) : null}
             </div>
           </div> */}
-          ===
+
           <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label
@@ -382,6 +403,16 @@ const LoadForm = (props: Props) => {
               </div>
             </div>
           </div>
+          {/* <DatePicker
+            selectsRange={true}
+            startDate={startDate}
+            endDate={endDate}
+            onChange={(update: any) => {
+              setDateRange(update);
+            }}
+            isClearable={true}
+            showTimeSelect
+          /> */}
           <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label

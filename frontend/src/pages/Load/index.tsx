@@ -12,6 +12,7 @@ import LoadCard from "./LoadCard";
 type Props = {};
 
 const Index = (props: Props) => {
+  const [formOpen, setFormOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const {
@@ -53,7 +54,14 @@ const Index = (props: Props) => {
       <h1 className="text-3xl mx-auto mb-2 bg-zinc-200/95 rounded-[0.35rem] w-full text-center md:w-80 pb-1 ">
         Load Page
       </h1>
-      <LoadForm addLoadMutation={addLoadMutation} />
+      <button
+        className="hover:bg-zinc-700 bg-zinc-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full mt-2"
+        type="submit"
+        onClick={() => setFormOpen(!formOpen)}
+      >
+        {formOpen ? "Click to Close form" : "Click to Add New Load"}
+      </button>
+      {formOpen ? <LoadForm addLoadMutation={addLoadMutation} /> : null}
 
       <div className="flex gap-4 mx-auto max-w-screen-md  flex-col md:flex-row justify-center items-center mt-4 md:flex-wrap md:w-[760px]">
         {isLoading ? (

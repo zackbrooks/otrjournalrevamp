@@ -77,10 +77,6 @@ export const addNewData = async (obj: any) => {
   }
 };
 
-export const updateBroker = async (broker: any) => {
-  return await journalApi.post(`/api/broker/edit/${broker.id}`, broker);
-};
-
 export const editData = async (obj: any) => {
   console.log("This would be a update call");
   const { dataType, dataInfo, dataId } = obj;

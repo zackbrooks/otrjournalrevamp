@@ -7,9 +7,12 @@ import { TbLogout } from "react-icons/tb";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-type Props = {};
+type Props = {
+  removePadding: boolean;
+};
 
 const RootLayout = (props: Props) => {
+  const { removePadding } = props;
   const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -89,7 +92,9 @@ const RootLayout = (props: Props) => {
       </nav>
       <main
         id="home"
-        className="h-[100vh] bg-cover bg-fixed md:bg-center bg-[center_left_-10rem] p-12 md:p-16"
+        className={`h-[100vh] bg-cover bg-fixed md:bg-center bg-[center_left_-10rem] p-12 md:p-16 ${
+          removePadding ? "px-0 md:px-0 pt-[32.5px] md:pt-[48px]" : null
+        }`}
         style={{ backgroundImage: `url(../../imgs/hero.jpg)` }}
       >
         <ToastContainer
