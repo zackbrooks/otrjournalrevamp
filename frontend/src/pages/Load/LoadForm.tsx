@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
+import ListMenu from "../../components/ListMenu";
 
 export interface dateFilter {
   startDate: string;
@@ -24,6 +25,8 @@ type Props = {
 const LoadForm = (props: Props) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
+  const [dateRange2, setDateRange2] = useState([null, null]);
+  const [startDate2, endDate2] = dateRange2;
   const { addLoadMutation } = props;
   console.log(dateRange);
 
@@ -55,21 +58,21 @@ const LoadForm = (props: Props) => {
       name: Yup.string(),
       payment: Yup.string(),
       notes: Yup.string(),
-      completed: Yup.boolean().required(),
-      originName: Yup.string().required(),
-      originAddress: Yup.string().required(),
-      originTrailer: Yup.string().required(),
-      originPUStart: Yup.string().required(),
-      originPUEnd: Yup.string().required(),
+      completed: Yup.boolean().required("Required"),
+      originName: Yup.string().required("Required"),
+      originAddress: Yup.string().required("Required"),
+      originTrailer: Yup.string().required("Required"),
+      originPUStart: Yup.string().required("Required"),
+      originPUEnd: Yup.string().required("Required"),
       originMiles: Yup.string(),
-      originType: Yup.string().required(),
-      destinationName: Yup.string().required(),
-      destinationAddress: Yup.string().required(),
-      destinationTrailer: Yup.string().required(),
-      destinationPUStart: Yup.string().required(),
-      destinationPUEnd: Yup.string().required(),
+      originType: Yup.string(),
+      destinationName: Yup.string().required("Required"),
+      destinationAddress: Yup.string().required("Required"),
+      destinationTrailer: Yup.string().required("Required"),
+      destinationPUStart: Yup.string().required("Required"),
+      destinationPUEnd: Yup.string().required("Required"),
       destinationMiles: Yup.string(),
-      destinationType: Yup.string().required(),
+      destinationType: Yup.string(),
       userId: Yup.string(),
     }),
     onSubmit: async (values) => {
@@ -80,15 +83,7 @@ const LoadForm = (props: Props) => {
 
   return (
     <>
-      <DatePicker
-        // selectsRange={true}
-        startDate={startDate}
-        endDate={endDate}
-        onChange={(update: any) => {
-          setDateRange(update);
-        }}
-        isClearable={true}
-      />
+      <ListMenu />
       <div className="w-full md:w-80 mx-auto bg-zinc-200/95 rounded-[0.35rem] p-2 pb-4">
         <h3 className="text-center">Add New Load</h3>
         <p className="text-center text-xs">
@@ -403,7 +398,7 @@ const LoadForm = (props: Props) => {
               </div>
             </div>
           </div>
-          {/* <DatePicker
+          <DatePicker
             selectsRange={true}
             startDate={startDate}
             endDate={endDate}
@@ -411,8 +406,8 @@ const LoadForm = (props: Props) => {
               setDateRange(update);
             }}
             isClearable={true}
-            showTimeSelect
-          /> */}
+            placeholderText={"Click to enter pickup window"}
+          />
           <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label
@@ -662,7 +657,32 @@ const LoadForm = (props: Props) => {
               </div>
             </div>
           </div>
+
           <div className="flex m-1">
+            <div className="flex flex-col w-full">
+              <label
+                htmlFor="destinationPUStart"
+                className={`text-xs font-bold bg-zinc-200/95 w-fit px-1 rounded-[0.35rem] pb-3 mt-2 `}
+              >
+                Dropoff Window
+              </label>
+              <DatePicker
+                required
+                className={` rounded-[0.35rem] p-1 bg-zinc-200/95
+                outline-none mt-[-6.75px]  focus:border-black w-full focus:border-2 mb-[-3px] `}
+                selectsRange={true}
+                startDate={startDate2}
+                endDate={endDate2}
+                onChange={(update: any) => {
+                  setDateRange2(update);
+                }}
+                isClearable={true}
+                placeholderText={"Click to enter pickup window"}
+              />
+            </div>
+          </div>
+
+          {/* <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label
                 htmlFor="destinationPUStart"
@@ -733,7 +753,7 @@ const LoadForm = (props: Props) => {
                 </p>
               ) : null}
             </div>
-          </div>
+          </div> */}
           <div className="flex m-1">
             <div className="flex flex-col w-full">
               <label
