@@ -19,12 +19,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<ProtectedRoute />}>
-          <Route path="/map" element={<Map />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/broker" element={<Broker />} />
           <Route path="/company" element={<Company />} />
           <Route path="/load" element={<Loads />} />
         </Route>
+      </Route>
+      <Route path="/" element={<RootLayout removePadding={true} />}>
+        <Route path="/map" element={<Map />} />
       </Route>
     </Routes>
   );

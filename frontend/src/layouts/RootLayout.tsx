@@ -74,7 +74,8 @@ const RootLayout = (props: Props) => {
   );
   return (
     <>
-      <nav className=" px-1  flex justify-between fixed w-full items-center mb-2 bg-zinc-900 text-white">
+      {/* h-[3.5%] */}
+      <nav className=" px-1  flex justify-between fixed w-full items-center mb-2 bg-zinc-900 text-white h-[3.5%]">
         <div className="flex gap-1 items-center justify-center md:p-3 p-1">
           <div>Logo</div>
           <div>OTR Journal</div>
@@ -92,7 +93,7 @@ const RootLayout = (props: Props) => {
       </nav>
       <main
         id="home"
-        className={`h-[100%] bg-cover bg-fixed md:bg-center bg-[center_left_-10rem] p-12 md:p-16 ${
+        className={`h-[98%] bg-cover bg-fixed md:bg-center bg-[center_left_-10rem] p-12 md:p-16 ${
           removePadding ? "px-0 md:px-0 pt-[32.5px] md:pt-[48px]" : null
         }`}
         style={{ backgroundImage: `url(../../imgs/hero.jpg)` }}
@@ -112,7 +113,7 @@ const RootLayout = (props: Props) => {
         />
         <Outlet />
       </main>
-      <footer className=" px-1  flex justify-between fixed w-full items-center mb-2 bg-zinc-900 text-white">
+      <footer className=" px-1  flex justify-between fixed w-full items-center mb-2 bg-zinc-900 text-white h-[3.5%]">
         <div className="flex gap-1 items-center justify-center md:p-3 p-1">
           <div>Logo</div>
           <div>OTR Journal</div>

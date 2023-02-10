@@ -50,7 +50,7 @@ const Index = (props: Props) => {
     content = loadInfo;
   }
   return (
-    <>
+    <div className="">
       <h1 className="text-3xl mx-auto mb-2 bg-zinc-200/95 rounded-[0.35rem] w-full text-center md:w-80 pb-1 ">
         Load Page
       </h1>
@@ -79,7 +79,7 @@ const Index = (props: Props) => {
           <p>You havent entered any load data</p>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
