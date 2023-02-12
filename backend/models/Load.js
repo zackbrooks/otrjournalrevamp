@@ -19,14 +19,11 @@ const LoadSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter an address for origin."],
   },
-  originPUStart: {
-    type: String,
+  originWindow: {
+    type: Array,
     required: [true, "Please enter a pick up start date for origin."],
   },
-  originPUEnd: {
-    type: String,
-    required: [false, "Please enter pick up end date for origin."],
-  },
+
   originMiles: {
     type: Number,
     required: false,
@@ -48,13 +45,9 @@ const LoadSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter an address for destination."],
   },
-  destinationPUStart: {
-    type: String,
+  destinationWindow: {
+    type: Array,
     required: [true, "Please enter a pick up start date for destination."],
-  },
-  destinationPUEnd: {
-    type: String,
-    required: [false, "Please enter pick up end date for destination."],
   },
   destinationMiles: {
     type: Number,
@@ -95,15 +88,13 @@ function validateLoad(load) {
     originName: Joi.string().required(),
     originAddress: Joi.string().required(),
     originTrailer: Joi.string().required(),
-    originPUStart: Joi.string().required(),
-    originPUEnd: Joi.string().required(),
+    originWindow: Joi.array().required(),
     originMiles: Joi.number(),
     originType: Joi.string().required(),
     destinationName: Joi.string().required(),
     destinationAddress: Joi.string().required(),
     destinationTrailer: Joi.string().required(),
-    destinationPUStart: Joi.string().required(),
-    destinationPUEnd: Joi.string().required(),
+    destinationWindow: Joi.array().required(),
     destinationMiles: Joi.number(),
     destinationType: Joi.string().required(),
   };

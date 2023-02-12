@@ -2,10 +2,11 @@ const { Load, validate } = require("../models/Load");
 const _ = require("lodash");
 
 exports.createLoad = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  // const { error } = validate(req.body);
+  // if (error) return res.status(400).send(error.details[0].message);
 
   try {
+    console.log(req.body);
     await Load.create(
       _.pick(req.body, [
         "userId",
@@ -15,15 +16,13 @@ exports.createLoad = async (req, res) => {
         "originAddress",
         "originType",
         "originTrailer",
-        "originPUStart",
-        "originPUEnd",
+        "originWindow",
         "originMiles",
         "destinationName",
         "destinationAddress",
         "destinationType",
         "destinationTrailer",
-        "destinationPUStart",
-        "destinationPUEnd",
+        "destinationWindow",
         "destinationMiles",
         "payment",
         "notes",
@@ -45,9 +44,7 @@ exports.getLoads = async (req, res) => {
   try {
     const loads = await Load.find({ userId: req.body.userId });
 
-    res.send({
-      loads,
-    });
+    res.send(loads);
   } catch (err) {
     // console.log("ZZZZZZZZZZZZ", err);
     res.status(400).send({ error: err.errors[fields].message });
@@ -83,15 +80,13 @@ exports.updateLoad = async (req, res) => {
           originAddress: req.body.originAddress,
           originType: req.body.originType,
           originTrailer: req.body.originTrailer,
-          originPUStart: req.body.originPUStart,
-          originPUEnd: req.body.originPUEnd,
+          originWindow: req.body.originWindow,
           originMiles: req.body.originMiles,
           destinationName: req.body.destinationName,
           destinationAddress: req.body.destinationAddress,
           destinationType: req.body.destinationType,
           destinationTrailer: req.body.destinationTrailer,
-          destinationPUStart: req.body.destinationPUStart,
-          destinationPUEnd: req.body.destinationPUEnd,
+          destinationWindow: req.body.destinationWindow,
           destinationMiles: req.body.destinationMiles,
           payment: req.body.payment,
           notes: req.body.notes,

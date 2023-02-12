@@ -13,15 +13,16 @@ const LoadCard = (props: Props) => {
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const { load, deleteLoadMutation, updateLoadMutation } = props;
+  console.log("LOAD", load);
   return (
     <>
       <div
         className="w-60 h-36 border-2 border-black p-2 rounded-md hover:scale-125 transition-transform hover:shadow-md bg-zinc-200/95 hover:bg-zinc-900 hover:text-zinc-200"
         onClick={() => setShowModal(true)}
       >
-        <p>Name: {load.name}</p>
-        <p>Phone Number: {load.phoneNumber}</p>
-        <p>Email: {load.email}</p>
+        <p>Origin: {load.originName}</p>
+        <p>Destination: {load.destinationName}</p>
+        <p>Email: {load.originWindow}</p>
         <p>Rating: {load.rating}</p>
         <div className="flex justify-between mt-2">
           <button

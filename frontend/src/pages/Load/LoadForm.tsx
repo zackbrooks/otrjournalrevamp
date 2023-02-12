@@ -38,6 +38,7 @@ type Props = {
 };
 
 const LoadForm = (props: Props) => {
+  const [typeSelectedOrigin, setTypeSelectedOrigin] = useState(type[0]);
   const [typeSelected, setTypeSelected] = useState(type[0]);
   const [dateRange, setDateRange] = useState<any>([]);
   const [startDate, endDate] = dateRange;
@@ -45,9 +46,7 @@ const LoadForm = (props: Props) => {
   const [startDate2, endDate2] = dateRange2;
   const { addLoadMutation } = props;
 
-  console.log(dateRange2[0]);
-
-  const formik = useFormik({
+  const formik = useFormik<Load>({
     initialValues: {
       bol: "",
       payment: "",
@@ -58,13 +57,13 @@ const LoadForm = (props: Props) => {
       originTrailer: "",
       originWindow: [],
       originMiles: "",
-      originType: "",
+      originType: "Live",
       destinationName: "",
       destinationAddress: "",
       destinationTrailer: "",
       destinationWindow: [],
       destinationMiles: "",
-      destinationType: "",
+      destinationType: "Live",
       userId: "63d48272c8ad1d722139ed3d",
     },
     validationSchema: Yup.object({
@@ -87,12 +86,19 @@ const LoadForm = (props: Props) => {
       userId: Yup.string(),
     }),
     onSubmit: async (values) => {
-      // values.completed = true;
-      // values.originWindow.push(4);
-      console.log(dateRange[0]);
-      // values.originWindow = [dateRange[0],]
+      console.log(dateRange2);
+      values.completed = false;
+      values.originWindow.push(dateRange[0]);
+      values.originWindow.push(dateRange[1]);
+      values.destinationWindow.push(dateRange2[0]);
+      values.destinationWindow.push(dateRange2[1]);
+      console.log(typeSelectedOrigin?.type);
+
+      values.originType = typeSelectedOrigin!.type;
+      values.destinationType = typeSelected!.type;
+
       console.log("VALUES", values);
-      // addLoadMutation.mutate({ dataType: "load", dataInfo: values });
+      addLoadMutation.mutate({ dataType: "load", dataInfo: values });
     },
   });
 
@@ -364,7 +370,10 @@ const LoadForm = (props: Props) => {
                     Type
                   </label>
 
-                  <Listbox value={typeSelected} onChange={setTypeSelected}>
+                  <Listbox
+                    value={typeSelectedOrigin}
+                    onChange={setTypeSelectedOrigin}
+                  >
                     <div className="relative mt-1">
                       <Listbox.Button
                         className={` rounded-[0.35rem] p-1 bg-zinc-200/95
@@ -375,7 +384,7 @@ const LoadForm = (props: Props) => {
                 }`}
                       >
                         <span className="block truncate w-32">
-                          {typeSelected?.type}
+                          {typeSelectedOrigin?.type}
                         </span>
                         <span className="pointer-events-none absolute -inset-y-16 right-[-11.5px] flex items-center pr-2">
                           <HiOutlineChevronUpDown
