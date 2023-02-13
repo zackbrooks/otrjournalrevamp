@@ -14,6 +14,14 @@ const LoadCard = (props: Props) => {
   const [editMode, setEditMode] = useState(false);
   const { load, deleteLoadMutation, updateLoadMutation } = props;
   console.log("LOAD", load);
+  const originPUStart = load.originWindow[0].slice(5, 7);
+  const originPUEnd = load.originWindow[0].slice(8, 10);
+  const destinationPUStart = load.destinationWindow[0].slice(5, 7);
+  const destinationPUEnd = load.destinationWindow[0].slice(8, 10);
+  const originPUStart2 = load.originWindow[1].slice(5, 7);
+  const originPUEnd2 = load.originWindow[1].slice(8, 10);
+  const destinationPUStart2 = load.destinationWindow[1].slice(5, 7);
+  const destinationPUEnd2 = load.destinationWindow[1].slice(8, 10);
   return (
     <>
       <div
@@ -22,8 +30,14 @@ const LoadCard = (props: Props) => {
       >
         <p>Origin: {load.originName}</p>
         <p>Destination: {load.destinationName}</p>
-        <p>Email: {load.originWindow}</p>
-        <p>Rating: {load.rating}</p>
+        <p>
+          Pickup:{" "}
+          {`${originPUStart}-${originPUEnd} to ${originPUStart2}-${originPUEnd2}`}
+        </p>
+        <p>
+          Dropoff:{" "}
+          {`${destinationPUStart}-${destinationPUEnd} to ${destinationPUStart2}-${destinationPUEnd2}`}
+        </p>
         <div className="flex justify-between mt-2">
           <button
             onClick={(e) => {
